@@ -1,9 +1,12 @@
 import {useState} from 'react'
 import './App.css'
-//import './spa'
-//import {menuItemClicked} from "./spa";
 import 'bootstrap'
 import './components/login'
+import './components/logout'
+import {Outlet, Link} from "react-router-dom"
+import './components/settings'
+import {loginURL} from "./components/settings";
+import Footer from "./components/Footer";
 
 function App() {
     const [userName, setUsername] = useState("");
@@ -11,7 +14,7 @@ function App() {
     const [loggedIn, setLoggedIn] = useState(false);
 
     const loginFunction = async (user) => {
-        const result = await fetch(loginUrl, {
+        const result = await fetch(loginURL, {
             method: "POST",
             headers:{
                 "Content.type": "application/json",
@@ -23,7 +26,13 @@ function App() {
         setUserRole(data.role);
         if (data.username != null && data.username != ""){
             setLoggedIn(true);
+            setUsername("");
+            setUserRole("");
         }
+    };
+
+    const logOutFunction = async () => {
+        setLoggedIn(false);
     }
 
     return (
@@ -40,10 +49,10 @@ function App() {
                 )}
                 <Outlet />
 
-                {!loggedIn && <LogIn onAdd={logInFunc} />}
+                {!loggedIn && <login onAdd={loginFunction()} />}
 
-                //{loggedIn && <LogOut onClick={logOutFunc} />}
-            <Footer />
+                //{loggedIn && <logout onClick={logOutFunction()} />}
+            <Footer/>
         </div>
     );
 };
