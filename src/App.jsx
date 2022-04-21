@@ -1,12 +1,13 @@
 import {useState} from 'react'
+import { Outlet, Link } from "react-router-dom";
 import './App.css'
 import 'bootstrap'
-import './components/login'
-import './components/logout'
-import {Outlet, Link} from "react-router-dom"
-import './components/settings'
-import {loginURL} from "./components/settings";
+import './components/Logout'
 import Footer from "./components/Footer";
+import './components/Login'
+import {loginURL, adminInfo, basicLogin} from "./components/Settings";
+import WelcomePage from "./components/WelcomePage";
+import Header from "./components/Header";
 
 function App() {
     const [userName, setUsername] = useState("");
@@ -35,9 +36,15 @@ function App() {
         setLoggedIn(false);
     }
 
+    const logoutFunction = async() =>{
+        setLoggedIn(false);
+        setUsername("");
+        setUserRole("");
+    }
+
     return (
         <div className="App">
-            <header className="app-header"/>
+            <Header/>
                 {loggedIn && <WelcomePage name={userName} role={userRole} />}
 
                 {loggedIn && (
@@ -49,10 +56,10 @@ function App() {
                 )}
                 <Outlet />
 
-                {!loggedIn && <login onAdd={loginFunction()} />}
+                {!loggedIn && <logIn onAdd={loginFunction} />}
 
-                //{loggedIn && <logout onClick={logOutFunction()} />}
-            <Footer/>
+                {loggedIn && <logOut onClick={logoutFunction} />}
+            <Footer />
         </div>
     );
 };
