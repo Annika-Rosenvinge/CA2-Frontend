@@ -1,6 +1,6 @@
-import {useState} from "react";
+import React, {useState} from "react";
 
-const login = ({onAdd}) => {
+const Login = ({onAdd}) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
@@ -21,33 +21,30 @@ const login = ({onAdd}) => {
     };
 
     return(
+        <div>
       <div className="border-0">
           <h2>login</h2>
           <form onSubmit={onSubmit}>
               <div className="login-control">
                   <label>Username</label>
-                  <input>
-                      className="inputForm"
-                      type="text"
-                      placeholder="username"
-                      value={username}
-                      onChange{(e) => setUsername(e.target.value)}
+                  <input className="inputForm" type="text" placeholder="username" value={username} onChange={(e) => setUsername(e.target.value)}>
                       </input>
               </div>
               <div className="login-control">
                   <label>Password</label>
-                  <input>
+                  <input
                       className="inputForm"
                       type="password"
                       placeholder="Password"
                       value={password}
-                      onChange{(e) => setPassword(e.target.value)}
+                      onChange={(e) => setPassword(e.target.value)}>
                   </input>
-                  <input type="submit" value="login" className="loginButton"/>
+                  <button type="submit" value="login" className="loginButton"/>
               </div>
           </form>
       </div>
+        </div>
     );
 };
 
-export default login;
+export default Login;

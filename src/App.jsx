@@ -2,23 +2,22 @@ import {useState} from 'react'
 import { Outlet, Link } from "react-router-dom";
 import './App.css'
 import 'bootstrap'
-import './components/Logout'
-import Footer from "./components/Footer";
-import './components/Login'
-import {loginURL, adminInfo, basicLogin} from "./components/Settings";
+import {loginURL, adminInfo, basicLogin, url} from "./components/Settings";
 import WelcomePage from "./components/WelcomePage";
 import Header from "./components/Header";
+import Login from "./components/Login";
+import Logout from "./components/Logout"
 
 function App() {
     const [userName, setUsername] = useState("");
     const [userRole, setUserRole] = useState("");
     const [loggedIn, setLoggedIn] = useState(false);
 
-    const loginFunction = async (user) => {
-        const result = await fetch(loginURL, {
+    const LoginFunction = async (user) => {
+        const result = await fetch(url, {
             method: "POST",
             headers:{
-                "Content.type": "application/json",
+                "Content-type": "application/json",
             },
             body: JSON.stringify(user),
         });
@@ -32,11 +31,7 @@ function App() {
         }
     };
 
-    const logOutFunction = async () => {
-        setLoggedIn(false);
-    }
-
-    const logoutFunction = async() =>{
+    const LogoutFunction = async() =>{
         setLoggedIn(false);
         setUsername("");
         setUserRole("");
@@ -56,10 +51,9 @@ function App() {
                 )}
                 <Outlet />
 
-                {!loggedIn && <logIn onAdd={loginFunction} />}
+                {!loggedIn && <Login onAdd={LoginFunction} />}
 
-                {loggedIn && <logOut onClick={logoutFunction} />}
-            <Footer />
+                {loggedIn && <Logout onClick={LogoutFunction} />}
         </div>
     );
 };
